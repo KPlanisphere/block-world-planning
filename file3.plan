@@ -1,0 +1,12 @@
+% Estado inicial
+initially:
+    sobre(a, mesa).
+    sobre(b, mesa).
+    sobre(c, mesa).
+    disponible.
+
+% Estado meta
+goal:
+    sobre(a, b),
+    sobre(b, c),
+    sobre(c, mesa) ? (2)

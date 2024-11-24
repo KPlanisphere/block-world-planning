@@ -1,0 +1,37 @@
+fluents:
+    sobre(CUBO, LUGAR) requires cubo(CUBO), lugar(LUGAR).
+    ocupado(CUBO) requires lugar(CUBO).
+    enganchado(CUBO) requires cubo(CUBO).
+    disponible.
+    levantado(CUBO) requires cubo(CUBO). % Nuevo fluente
+
+actions:
+    agarrar(CUBO) requires cubo(CUBO).
+    soltar(CUBO, LUGAR) requires cubo(CUBO), lugar(LUGAR), CUBO <> LUGAR.
+    subir(CUBO) requires cubo(CUBO), enganchado(CUBO), not levantado(CUBO). % Nueva acción
+    bajar(CUBO) requires cubo(CUBO), enganchado(CUBO), levantado(CUBO).     % Nueva acción
+
+always:
+    executable agarrar(CUBO) if disponible, not ocupado(CUBO).
+    executable soltar(CUBO, LUGAR) if -disponible, not ocupado(LUGAR).
+    executable subir(CUBO) if enganchado(CUBO), not levantado(CUBO).
+    executable bajar(CUBO) if enganchado(CUBO), levantado(CUBO).
+
+    enganchado(CUBO).
+
+    inertial sobre(CUBO, LUGAR).
+    caused ocupado(CUBO) if sobre(CUBO1, CUBO), cubo(CUBO).
+    caused ocupado(CUBO) after soltar(CUBO1, CUBO), cubo(CUBO), CUBO1 <> CUBO.
+    caused sobre(CUBO, LUGAR) after soltar(CUBO, LUGAR).
+    caused -sobre(CUBO, LUGAR1) after soltar(CUBO, LUGAR), sobre(CUBO, LUGAR1), LUGAR <> LUGAR1.
+
+    caused -sobre(CUBO, LUGAR) after agarrar(CUBO).
+    caused -disponible after agarrar(CUBO).
+    caused disponible after soltar(CUBO, LUGAR).
+    caused enganchado(CUBO) after agarrar(CUBO).
+
+    % Efectos de subir y bajar
+    caused levantado(CUBO) after subir(CUBO).
+    caused -levantado(CUBO) after bajar(CUBO).
+
+noConcurrency.
