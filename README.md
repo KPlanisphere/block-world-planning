@@ -48,10 +48,6 @@ Goal Reached: sobre(a, b), sobre(b, c), sobre(c, mesa)
 
 The desired final arrangement of blocks:
 
-```css
-	A
-    B
-    C
- ───────
-   Table
-   ```
+<p align= "center">
+    <img src="https://github.com/user-attachments/assets/7bc88e7b-6a30-4225-8983-77a06db0ed3d" style="width: 20%; height: auto;">
+</p>
